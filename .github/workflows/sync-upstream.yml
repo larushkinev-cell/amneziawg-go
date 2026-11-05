@@ -25,9 +25,7 @@ jobs:
                -f branch="${{ github.event.repository.default_branch }}" > /tmp/sync.out 2>/tmp/sync.err; then
             echo "merge-upstream failed"; cat /tmp/sync.err
             gh issue create --title "upstream sync failed ($(date -u +%F))" \
-              --body "Автоматический merge upstream не прошёл. Нужна ручная правка.
-
-$(cat /tmp/sync.err)" || true
+              --body "Автоматический merge upstream не прошёл: $(cat /tmp/sync.err)" || true
             exit 1
           fi
           cat /tmp/sync.out
